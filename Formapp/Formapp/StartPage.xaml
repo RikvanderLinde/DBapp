@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Formapp.StartPage"
+             Title="Question filler."> 
+  <ContentPage.Padding>
+    <OnPlatform x:TypeArguments="Thickness"
+                iOS="20, 40, 20, 20"
+                Android="20, 20, 20, 20"
+                WinPhone="20, 20, 20, 20" />
+  </ContentPage.Padding>
+  <ContentPage.Content>
+    <StackLayout VerticalOptions="FillAndExpand"
+                 HorizontalOptions="FillAndExpand"
+                 Orientation="Vertical"
+                 Spacing="15">
+      <Label  Text="Test:" />
+      <Entry  x:Name="boxServer" Text="Server" />
+      <Entry  x:Name="boxUser"   Text="Username" />
+      <Entry  x:Name="boxPass"   Text="Password" />
+      <Entry  x:Name="boxQuestion"   Text="Lllll" />
+      <Button x:Name="butLogin"  Text="Login" />
+      <Button x:Name="butTest"   Text="Test"  Clicked="OnButtonClicked"/>
+    </StackLayout>
+  </ContentPage.Content>
+</ContentPage>
