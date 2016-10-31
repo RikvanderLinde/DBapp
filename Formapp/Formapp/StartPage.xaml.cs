@@ -2,82 +2,86 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Windows.Data.Json;
 using Xamarin.Forms;
 
 namespace Formapp
 {
     public partial class StartPage : ContentPage
     {
+        int[] questionares ={0 };
+        string ip = "http://192.168.1.100";
 
         public StartPage()
         {
             InitializeComponent();
-
         }
 
-        public class question
+        public async Task<Boolean> Login(string USER , string PASS)
         {
-            [JsonProperty(PropertyName = "Question")]
-            public string Question { get; set; }
-            [JsonProperty(PropertyName = "Type")]
-            public string Type { get; set; }
-            [JsonProperty(PropertyName = "Info")]
-            public string Info { get; set; }
-            [JsonProperty(PropertyName = "Answer1")]
-            public string Answer1 { get; set; }
-            [JsonProperty(PropertyName = "Next1")]
-            public string Next1 { get; set; }
-            [JsonProperty(PropertyName = "Answer2")]
-            public string Answer2 { get; set; }
-            [JsonProperty(PropertyName = "Next2")]
-            public string Next2 { get; set; }
-            [JsonProperty(PropertyName = "Answer3")]
-            public string Answer3 { get; set; }
-            [JsonProperty(PropertyName = "Next3")]
-            public string Next3 { get; set; }
-        }
-
-        public async Task<question> RefreshDataAsync(string url)
-        {
+            string url = $"/app/login.php?User={USER}&Pass={PASS}";
             HttpClient client = new HttpClient();
             client.MaxResponseContentBufferSize = 256000;
-            Uri uri = new Uri("http://" + url);
-            //question item = new question();
+            Uri uri = new Uri(ip + url);
 
             var response = await client.GetAsync(uri);
 
             if (response.IsSuccessStatusCode)
             {
-                var content = await response.Content.ReadAsStringAsync();
+                string raw = await response.Content.ReadAsStringAsync();
 
-                Debug.WriteLine(content);
-                question item = JsonConvert.DeserializeObject<question>(content);
-                return item;
+                if (raw.Contains("valid") && !raw.Contains("not"))
+                    return true;
+                else
+                    return false;
             }
-            return new question();
+            return false;
         }
+        /*
+        public async Task Vragenlijst(int ID)
+        {
+            string url = $"/app/lists_get.php?ID={ID}";
+            HttpClient client = new HttpClient();
+            client.MaxResponseContentBufferSize = 256000;
+            Uri uri = new Uri(ip + url);
+
+            var response = await client.GetAsync(uri);
+            int[] result = {1,2,4 };
+            if (response.IsSuccessStatusCode)
+            {
+                string raw = await response.Content.ReadAsStringAsync();
+                //Data = JsonConvert.DeserializeObject<List<lijstitem>>(raw);
+                listAcces.ItemsSource = result;
+            }
+        }*/
 
         private void OnButtonClicked(object sender, EventArgs args)
         {
-            GetData();
+            Login();
         }
 
-        private async void GetData()
+        private void OnItemTapped(object sender, EventArgs args)
         {
-            // UPDATE NIET, werkt soort van wel.
-            int id = 3;
-            string url = $"localhost/app/question_get.php?ID={id}";
-            question data = new question();
-            data = (await RefreshDataAsync(url));
-            this.dataLabel.Text = data.Question;
-            Debug.WriteLine(data.Next2);
-            Debug.WriteLine(data.Answer1);
+            butLogin.BackgroundColor = Color.Yellow;
         }
 
+        private async void Login()
+        {
+            //Boolean loggedin = (await Login("Test", "Test"));
+            string user = boxUser.Text;
+            string pass = boxPass.Text;
+            Boolean loggedin = (await Login(user,pass));
+            if (loggedin)
+            {
+                butLogin.BackgroundColor = Color.Green;
+                int UserID = 1;
+                //await Vragenlijst(UserID);
+            }
+            else
+            {
+                butLogin.BackgroundColor = Color.Red;
+            }
+        }
     }
 }

@@ -20,7 +20,7 @@ namespace Formapp.UWP
         public MainPage()
         {
             this.InitializeComponent();
-
+             
             LoadApplication(new Formapp.App());
         }
     }
