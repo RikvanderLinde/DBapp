@@ -14,11 +14,11 @@
                  HorizontalOptions="FillAndExpand"
                  Orientation="Vertical"
                  Spacing="15">
-      <Label  Text="Test:" />
-      <Entry  x:Name="boxUser"   Text="Username" />
-      <Entry  x:Name="boxPass"   Text="Passwordd" />
+      <Label  Text="Test:" />  
+      <Entry  x:Name="boxUser"   Text="Test" /> 
+      <Entry  x:Name="boxPass"   Text="Test" />
       <Button x:Name="butLogin"  Text="Login" Clicked="OnButtonClicked" />
       <ListView x:Name="listAcces" ItemTapped="OnItemTapped"/>
-    </StackLayout>
+    </StackLayout> 
   </ContentPage.Content>
 </ContentPage>

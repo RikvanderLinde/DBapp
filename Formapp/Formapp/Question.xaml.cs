@@ -1,76 +1,100 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Windows.Data.Json;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
 namespace Formapp
 {
     public partial class Question : ContentPage
     {
-        public Question()
+        string name = "";
+        int index = 1;
+        questionDB _database;
+        public Question(string Name, questionDB database)
         {
             InitializeComponent();
+            name = Name;
+            _database = database;
+            MakeQuestion(index);
         }
-
-        public class question
+        
+        private void MakeQuestion(int index)
         {
-            [JsonProperty(PropertyName = "Question")]
-            public string Question { get; set; }
-            [JsonProperty(PropertyName = "Type")]
-            public string Type { get; set; }
-            [JsonProperty(PropertyName = "Info")]
-            public string Info { get; set; }
-            [JsonProperty(PropertyName = "Answer1")]
-            public string Answer1 { get; set; }
-            [JsonProperty(PropertyName = "Next1")]
-            public string Next1 { get; set; }
-            [JsonProperty(PropertyName = "Answer2")]
-            public string Answer2 { get; set; }
-            [JsonProperty(PropertyName = "Next2")]
-            public string Next2 { get; set; }
-            [JsonProperty(PropertyName = "Answer3")]
-            public string Answer3 { get; set; }
-            [JsonProperty(PropertyName = "Next3")]
-            public string Next3 { get; set; }
-        }
+            question quest = new question();
+            quest = _database.GetQuestion(name,index);
 
-        public async Task<question> RefreshDataAsync(string url)
-        {
-            HttpClient client = new HttpClient();
-            client.MaxResponseContentBufferSize = 256000;
-            Uri uri = new Uri("http://" + url);
+            Entry ent = new Entry();
 
-            var response = await client.GetAsync(uri);
+            //boxQuestion.Text = quest.Question;
+            //boxInfo.Text = quest.Info;
 
-            if (response.IsSuccessStatusCode)
+            //"Open", "Ok", "Yes/No", "Multiple", "Picture"
+            StackLayout layout = new StackLayout();
+
+            //Premade layout
+            Label question = new Label();
+            question.Text = quest.Question;
+            layout.Children.Add(question);
+
+            Label info = new Label();
+            question.Text = quest.Info;
+            layout.Children.Add(info);
+
+            //Special Layout
+            if (quest.Type == "Open")
             {
-                var content = await response.Content.ReadAsStringAsync();
-
-                Debug.WriteLine(content);
-                question item = JsonConvert.DeserializeObject<question>(content);
-                return item;
+                Button btn = new Button();
+                btn.Clicked += (sender, e) => MakeQuestion(quest.Next1);
+                btn.Text = quest.Answer1;
+                layout.Children.Add(btn);
             }
-            return new question();
-        }
 
-        private void OnButtonClicked(object sender, EventArgs args)
-        {
-            GetData();
-        }
+            if (quest.Type == "Ok")
+            {
+                Button btn = new Button();
+                btn.Clicked += (sender, e) => MakeQuestion(quest.Next1);
+                btn.Text = quest.Answer1;
+                layout.Children.Add(btn);
+            }
 
-        private async void GetData()
-        {
-            int id = 4;
-            string url = $"localhost/app/question_get.php?ID={id}";
-            question data = new question();
-            data = (await RefreshDataAsync(url));
-            //this.dataLabel.Text = data.Question;
+            if (quest.Type == "Yes/No")
+            {
+                Button btn1 = new Button();
+                btn1.Clicked += (sender, e) => MakeQuestion(quest.Next1);
+                btn1.Text = quest.Answer1;
+                layout.Children.Add(btn1);
+
+                Button btn2 = new Button();
+                btn2.Clicked += (sender, e) => MakeQuestion(quest.Next2);
+                btn2.Text = quest.Answer2;
+                layout.Children.Add(btn2);
+            }
+
+            if (quest.Type == "Multiple")
+            {
+                Button btn1 = new Button();
+                btn1.Clicked += (sender, e) => MakeQuestion(quest.Next1);
+                btn1.Text = quest.Answer1;
+                layout.Children.Add(btn1);
+
+                Button btn2 = new Button();
+                btn2.Clicked += (sender, e) => MakeQuestion(quest.Next2);
+                btn2.Text = quest.Answer2;
+                layout.Children.Add(btn2);
+
+                Button btn3 = new Button();
+                btn3.Clicked += (sender, e) => MakeQuestion(quest.Next3);
+                btn3.Text = quest.Answer3;
+                layout.Children.Add(btn3);
+            }
+
+            if (quest.Type == "Picture")
+            {
+                Button btn = new Button();
+                btn.Clicked += (sender, e) => MakeQuestion(quest.Next1);
+                btn.Text = quest.Answer1;
+                layout.Children.Add(btn);
+            }
+            //Set layout
+            
+            //Resources["StackLayoutQuestion"] = layout;
         }
     }
 }

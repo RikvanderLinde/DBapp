@@ -9,11 +9,13 @@
                 WinPhone="20, 20, 20, 20" />
   </ContentPage.Padding>
   <ContentPage.Content>
-    <StackLayout VerticalOptions="FillAndExpand"
+    <StackLayout x:Name="StackLayoutQuestion"
+                 VerticalOptions="FillAndExpand"
                  HorizontalOptions="FillAndExpand"
                  Orientation="Vertical"
                  Spacing="15">
-      <Label  Text="Question : " />
+      <Label  x:Name="boxQuestion" Text="Question" />
+      <Label  x:Name="boxInfo" Text="Info" />
     </StackLayout>
   </ContentPage.Content>
 </ContentPage>
