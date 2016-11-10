@@ -15,6 +15,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Formapp.Windows", "Formapp\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Formapp", "Formapp\Formapp\Formapp.csproj", "{A2F7B5E2-7E6C-4E47-B272-EB5BEF04649E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PHP", "PHP", "{6B97411E-69C4-4335-9F68-F6B0D363D080}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\..\..\..\xampp\htdocs\App\answer_set.php = ..\..\..\..\..\..\xampp\htdocs\App\answer_set.php
+		..\..\..\..\..\..\xampp\htdocs\App\database_connect.php = ..\..\..\..\..\..\xampp\htdocs\App\database_connect.php
+		..\..\..\..\..\..\xampp\htdocs\App\lists_get.php = ..\..\..\..\..\..\xampp\htdocs\App\lists_get.php
+		..\..\..\..\..\..\xampp\htdocs\App\login.php = ..\..\..\..\..\..\xampp\htdocs\App\login.php
+		..\..\..\..\..\..\xampp\htdocs\App\question_get.php = ..\..\..\..\..\..\xampp\htdocs\App\question_get.php
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Ad-Hoc|Any CPU = Ad-Hoc|Any CPU
