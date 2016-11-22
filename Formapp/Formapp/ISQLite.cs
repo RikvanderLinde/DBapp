@@ -1,7 +1,7 @@
 ﻿using System;
 using SQLite;
 
-namespace Formapp
+namespace DBapp
 {
     public interface ISQLite
     {

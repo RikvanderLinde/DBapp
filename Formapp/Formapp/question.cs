@@ -1,23 +1,18 @@
 ﻿using Newtonsoft.Json;
 using SQLite;
 
-namespace Formapp
+namespace DBapp
 {
     public class question
     {
-        [PrimaryKey, AutoIncrement]
-        public int NR { get; set; }
-
-        public string Name { get; set; }
-
         [JsonProperty(PropertyName = "ID")]
         public int ID { get; set; }
         [JsonProperty(PropertyName = "Question")]
         public string Question { get; set; }
+        [JsonProperty(PropertyName = "Description")]
+        public string Description { get; set; }
         [JsonProperty(PropertyName = "Type")]
         public string Type { get; set; }
-        [JsonProperty(PropertyName = "Info")]
-        public string Info { get; set; }
         [JsonProperty(PropertyName = "Answer1")]
         public string Answer1 { get; set; }
         [JsonProperty(PropertyName = "Next1")]
@@ -30,5 +25,11 @@ namespace Formapp
         public string Answer3 { get; set; }
         [JsonProperty(PropertyName = "Next3")]
         public int Next3 { get; set; }
+
+        [PrimaryKey, AutoIncrement, JsonIgnore]
+        public int NR { get; set; }
+        [JsonIgnore]
+        public string Name { get; set; }
+
     }
 }

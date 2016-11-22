@@ -37,7 +37,9 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="ISQLite.cs" />
+    <Compile Include="answer.cs" />
     <Compile Include="question.cs" />
+    <Compile Include="answerDB.cs" />
     <Compile Include="questionDB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Question.xaml.cs">

@@ -154,9 +154,9 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Formapp\Formapp.csproj">
+    <ProjectReference Include="..\Formapp\DBapp.csproj">
       <Project>{A2F7B5E2-7E6C-4E47-B272-EB5BEF04649E}</Project>
-      <Name>Formapp</Name>
+      <Name>DBapp</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />

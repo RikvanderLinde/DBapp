@@ -5,7 +5,7 @@ using System.Text;
 
 using Xamarin.Forms;
 
-namespace Formapp
+namespace DBapp
 {
     public class App : Application
     {

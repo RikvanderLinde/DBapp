@@ -2,12 +2,11 @@
 using SQLite;
 using Xamarin.Forms;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Diagnostics;
 using Newtonsoft.Json;
 
-namespace Formapp
+namespace DBapp
 {
     public class questionDB
     {
@@ -21,11 +20,9 @@ namespace Formapp
             _connection.CreateTable<question>();
         }
 
-        public async void AddQuestion(string name)
+        public async void AddQuestions(string name)
         {
-            int index = 1;
-            name = "Dove";
-            string url = $"/app/question_get.php?ID={index}&DB={name}";
+            string url = $"/QuestionApp/question_get.php?DB=qst_{name}";
 
             HttpClient client = new HttpClient();
             client.MaxResponseContentBufferSize = 256000;
@@ -36,51 +33,29 @@ namespace Formapp
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
-
-                Debug.WriteLine(content);
-                question item = JsonConvert.DeserializeObject<question>(content);
-                item.Type = types[Int32.Parse(item.Type)];
-                item.Name = name;
-                _connection.Insert(item);
+                List<question> items = JsonConvert.DeserializeObject<List<question>>(content);
+                foreach (question a in items)
+                {
+                a.Type = types[Int32.Parse(a.Type)];
+                a.Name = name;
+                _connection.Insert(a);
+                }
             }
         }
 
         public question GetQuestion(string name,int id)
         {
-            return _connection.Table<question>().FirstOrDefault(t => t.Name == name);
-        }
-        
-        /*
-        public IEnumerable<questionDB> GetQuestions()
-        {
-            var query = _connection.Table<questionDB>();
-
-            return (from t in _connection.QueryAsync   Table<questionDB>()
-                    select t).ToList();
-        }
-        
-        public questionDB GetQuestion(int id)
-        {
-            var query = _connection.Table<questionDB>().Where ();
-            return ;
-        }
-        
-        public void DeleteQuestion(int id)
-        {
-            _connection.Delete<DataBase>(id);
+            return _connection.Table<question>().First(t => t.Name == name && t.ID == id);
         }
 
-        
-        public void AddQuestion(string Question)
+        public int GetFirst(string name)
         {
-            var newQuestion = new DataBase
-            {
-                Question = Question,
-                CreatedOn = DateTime.Now
-            };
-
-            _connection.Insert(newQuestion);
+            return _connection.Table<question>().First(t => t.Name == name).ID;
         }
-        */
+
+        public void empty()
+        {
+            _connection.DeleteAll<question>();
+        }
     }
 }

@@ -1,20 +1,20 @@
 ﻿using Newtonsoft.Json;
-using SQLite;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace Formapp
+namespace DBapp
 {
     public partial class StartPage : ContentPage
     {
-        private questionDB _database;
+        private questionDB _questionDB;
+        private answerDB _answerDB;
         int[] questionares ={0};
-        static public string ip = "http://192.168.1.101";
-        user User;
+        static public string ip = "http://84.24.118.152";
+        public user User;
 
         public StartPage()
         {
@@ -43,7 +43,7 @@ namespace Formapp
 
         public async Task<Boolean> Login(string USER , string PASS)
         {
-            string url = $"/app/login.php?User={USER}&Pass={PASS}";
+            string url = $"/QuestionApp/login.php?User={USER}&Pass={PASS}";
             HttpClient client = new HttpClient();
             client.MaxResponseContentBufferSize = 256000;
             Uri uri = new Uri(ip + url);
@@ -64,13 +64,12 @@ namespace Formapp
         
         public async Task<string[]> Vragenlijst(int ID)
         {
-            string url = $"/app/lists_get.php?ID={ID}";
+            string url = $"/QuestionApp/lists_get.php?ID={ID}";
             HttpClient client = new HttpClient();
             client.MaxResponseContentBufferSize = 256000;
             Uri uri = new Uri(ip + url);
 
             var response = await client.GetAsync(uri);
-            int[] result = {1,2,4 };
             string[] lijsten = new string[0];
 
             if (response.IsSuccessStatusCode)
@@ -82,7 +81,7 @@ namespace Formapp
 
                 for (int i=0; i<Data.Count; i++)
                 {
-                    lijsten[i] = Data[i].Naam;
+                    lijsten[i] = Data[i].Naam.Substring(4);
                 }
                 return lijsten;
             }
@@ -96,18 +95,21 @@ namespace Formapp
 
         private void MakeStorage(string[] lijsten)
         {
-            _database = new questionDB();
-            _database.AddQuestion(lijsten[0]);
-            _database.AddQuestion(lijsten[1]);
-            _database.AddQuestion(lijsten[2]);
+            _questionDB = new questionDB();
+            _questionDB.empty();
+            _answerDB = new answerDB();
+            _answerDB.empty();
+
+            for (var i = 0; i < lijsten.Count(); i++)
+            {
+                _questionDB.AddQuestions(lijsten[i]);
+            }
         }
 
         private void OnItemTapped(object sender, EventArgs args)
         {
-
             string name = listAcces.SelectedItem.ToString();
-            Navigation.PushModalAsync(new Question(name, _database));
-
+            Navigation.PushModalAsync(new Question(name, _questionDB, _answerDB,User.ScreenName));
         }
 
         private async void Login()
@@ -128,5 +130,6 @@ namespace Formapp
                 butLogin.BackgroundColor = Color.Red;
             }
         }
+        
     }
 }

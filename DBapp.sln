@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Formapp.Droid", "Formapp\Formapp.Droid\Formapp.Droid.csproj", "{FA108087-4EC3-47C1-ADE9-6691A92D5DFF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBapp.Droid", "Formapp\Formapp.Droid\DBapp.Droid.csproj", "{FA108087-4EC3-47C1-ADE9-6691A92D5DFF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Formapp.iOS", "Formapp\Formapp.iOS\Formapp.iOS.csproj", "{A1A8F8F4-EFA7-4635-AAB4-8DB2D8298246}"
 EndProject
@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Formapp.UWP", "Formapp\Form
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Formapp.Windows", "Formapp\Formapp.Windows\Formapp.Windows.csproj", "{AE717BE0-0D0F-4F6C-9216-CD73ED802190}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Formapp", "Formapp\Formapp\Formapp.csproj", "{A2F7B5E2-7E6C-4E47-B272-EB5BEF04649E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBapp", "Formapp\Formapp\DBapp.csproj", "{A2F7B5E2-7E6C-4E47-B272-EB5BEF04649E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
